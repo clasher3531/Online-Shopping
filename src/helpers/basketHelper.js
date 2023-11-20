@@ -27,7 +27,17 @@ function addProductToBasket(basket, product) {
     if (!basket || !product) {
         return null;
     } else {
-        basket.products.push(product);
+        var isProductFound = false;
+        basket.products.forEach(function (prod) {
+            if(prod.id === product.id) {
+                prod.qty += 1;
+                isProductFound = true
+            }
+        })
+        if (!isProductFound) {
+            product.qty = 1;
+            basket.products.push(product);
+        }
         localStorage.setItem('Basket', JSON.stringify(basket));
     }
 }

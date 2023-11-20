@@ -8,7 +8,7 @@ function MiniCartProductCard(props) {
     }
     return (
         <div className="product-card">
-            <table style={{width: '100%',borderCollapse: 'collapse', borderSpacing:'0', backgroundColor: "lightgray"}}>
+            <table style={{width: '100%',borderCollapse: 'collapse', borderSpacing:'0', backgroundColor: "#F2F2F2"}}>
                 <tbody>
                     <tr>
                         <td rowSpan="3" style={{backgroundColor: "white", width: "100px"}}><img src={props.image} width="100px" height="125px" alt=""/></td>
@@ -18,7 +18,7 @@ function MiniCartProductCard(props) {
                         <td>Rs.&nbsp;{props.price}</td>
                     </tr>
                     <tr>
-                        <td>Qty: 1</td>
+                        <td>Qty:&nbsp;{props.qty}</td>
                     </tr>
                 </tbody>
             </table><br></br>
