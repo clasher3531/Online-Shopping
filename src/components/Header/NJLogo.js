@@ -1,9 +1,14 @@
 import React from "react";
+import { useNavigate } from 'react-router-dom';
 
 function NJLogo() {
+    const navigate = useNavigate();
+    function logoClickHandler() {
+        navigate('/');
+    }
     return (
         <div className="text-center">
-            <h1 style={{fontFamily:'fantasy', margin:'20px'}}>N&N Collections</h1>
+            <h1 onClick={logoClickHandler} style={{fontFamily:'fantasy', margin:'20px', cursor:'pointer'}}>N&N Collections</h1>
         </div>
     )
 }

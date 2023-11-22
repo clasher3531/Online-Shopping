@@ -3,11 +3,16 @@ import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 import {useDispatch} from 'react-redux'
 import {setLoader} from '../store';
+import { useNavigate } from 'react-router-dom';
 
 function MyModal(props) {
     const dispatch = useDispatch();
+    const navigate = useNavigate();
     function modalLoadHandler() {
       dispatch(setLoader(false));
+    }
+    function buttonClickHandler() {
+      navigate(props.navigatelink)
     }
     return (
       <div className="Modal" onLoad={modalLoadHandler}>
@@ -23,7 +28,7 @@ function MyModal(props) {
             <h4>{props.modalsubheading}</h4>
             {props.modaldescription}
           </Modal.Body>
-          <Modal.Footer><Button variant="secondary">{props.modalbuttontext}</Button></Modal.Footer>
+          <Modal.Footer><Button variant="secondary" onClick={buttonClickHandler}>{props.modalbuttontext}</Button></Modal.Footer>
         </Modal>
       </div>
     );

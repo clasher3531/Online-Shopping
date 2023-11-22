@@ -1,8 +1,13 @@
 import React from "react";
 import Button from 'react-bootstrap/Button';
 import MiniCartProduct from "../Product/MiniCartProduct";
+import { useNavigate } from 'react-router-dom';
 
 function MiniCart(props) {
+    const navigate = useNavigate();
+    function checkoutButtonHandler() {
+        navigate('/cart');
+    }
     return (
         <div className="offcanvas offcanvas-end" data-bs-scroll="true" data-bs-backdrop="false" tabIndex="-1" id="offcanvasScrolling" aria-labelledby="offcanvasScrollingLabel">
             <div className="offcanvas-header">
@@ -13,9 +18,18 @@ function MiniCart(props) {
                 {props.basketData && props.basketData.products && props.basketData.products.length > 0 ? <MiniCartProduct basketData={props.basketData} productRemoveBasketHandler={props.productRemoveBasketHandler}/> : <p>No items are available in the cart</p>}
             </div>
             {props.basketData && props.basketData.products && props.basketData.products.length > 0 ?
-            <div className="proceed-checkout-button d-grid gap-2" style={{margin:"10px 10px 10px 10px"}}>
-                <Button variant="secondary" size="lg">Proceed To Checkout</Button>
-            </div> : ""}
+            <div style={{margin:'20px'}}>
+                <hr></hr>
+                <div className="d-flex justify-content-between" style={{margin: '10px'}}>
+                    <strong>SUBTOTAL</strong>
+                    <strong>INR&nbsp;{props.basketData.totalPrice}</strong>
+                </div>
+                <div style={{fontSize: 'small', marginLeft:'10px'}}>Shipping and taxes calculated at checkout.</div>
+                <div className="proceed-checkout-button d-grid gap-2" style={{margin:"15px 10px 10px 10px"}}>
+                    <Button variant="secondary" size="lg" onClick={checkoutButtonHandler}>Proceed To Checkout</Button>
+                </div>
+            </div>
+             : ""}
         </div>
     )
 }
