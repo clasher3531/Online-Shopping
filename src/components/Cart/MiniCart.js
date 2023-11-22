@@ -15,7 +15,7 @@ function MiniCart(props) {
                 <button type="button" className="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
             </div><hr></hr>
             <div className="offcanvas-body">
-                {props.basketData && props.basketData.products && props.basketData.products.length > 0 ? <MiniCartProduct basketData={props.basketData} productRemoveBasketHandler={props.productRemoveBasketHandler}/> : <p>No items are available in the cart</p>}
+                {props.basketData && props.basketData.products && props.basketData.products.length > 0 ? <MiniCartProduct basketData={props.basketData} productRemoveBasketHandler={props.productRemoveBasketHandler}/> : <p style={{textAlign:"center"}}>No items are available in the cart</p>}
             </div>
             {props.basketData && props.basketData.products && props.basketData.products.length > 0 ?
             <div style={{margin:'20px'}}>
