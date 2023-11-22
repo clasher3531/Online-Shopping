@@ -11,8 +11,9 @@ function HeaderUtility(props) {
         if (currentBasket) {
             var data = {}
             data.products = currentBasket.products;
-            data.count = currentBasket.products.length;
-            data.id = props.basketData.id;
+            data.count = currentBasket.count;
+            data.id = currentBasket.id;
+            data.totalPrice = currentBasket.totalPrice;
             props.setBasketData(data);
         }
     }
@@ -22,8 +23,9 @@ function HeaderUtility(props) {
             <div className="d-flex justify-content-around">
                 <div className="contact-us-link"><a href="*" className="link-secondary" style={{'textDecoration': 'none'}}>Contact Us</a></div>
                 <div className="logo"><NJLogo/></div>
-                <CartIcon basketData={props.basketData} setBasketData={props.setBasketData}/>
-                <MiniCart basketData={props.basketData} productRemoveBasketHandler={productRemoveBasketHandler}/>
+                <CartIcon basketData={props.basketData} setBasketData={props.setBasketData} iscartpage={props.iscartpage}/>
+                {!props.iscartpage ? 
+                    <MiniCart basketData={props.basketData} productRemoveBasketHandler={productRemoveBasketHandler}/> : ""}
             </div>
             <div className="Menu">
                 <Menu/>

@@ -21,14 +21,15 @@ function ProductCard(props) {
             <img className="card-img-top"src={props.image} alt="" width="400px" height="300px"/>
             <div className="card-body">
                 <h5 className="card-title" style={{fontSize: '15px'}}>{props.title}</h5>
-                <h5 className="card-price" style={{fontSize: '15px', marginTop: '18px'}}>Rs.&nbsp;{props.price}</h5>
+                <h5 className="card-price" style={{fontSize: '15px', marginTop: '18px'}}>INR&nbsp;{props.price}</h5>
                 <button type="button" className="btn btn-secondary" onClick={addToCartButtonClickHandler} style={{ position: 'absolute', bottom: '18px', right: '5rem'}}>Add To Cart</button>
             </div>
             <Modal show={modalShow} onHide={() => setModalShow(false)}
             modalheading="Product Added To The Cart" 
             modalsubheading={"Product ID: " + props.id} 
-            modaldescription={<ModalProductCard title={props.title} price={props.price} image={props.image}/>} 
-            modalbuttontext={"Go to Cart"}/>
+            modaldescription={<ModalProductCard title={props.title} price={props.price} image={props.image}/>}
+            modalbuttontext={"Go to Cart"}
+            navigatelink='/cart'/>
         </div>
     )
 }
