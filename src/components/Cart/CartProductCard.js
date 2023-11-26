@@ -18,7 +18,7 @@ function CartProductCard(props) {
                 <tbody>
                     <tr>
                         <td rowSpan="3" style={{backgroundColor: "white", width: "100px"}}><img src={props.image} width="200px" height="200px" alt=""/></td>
-                        <th>{props.title}<button onClick={handleShow} style={{borderRadius: "50%", border: "1px", float: "right", marginRight: "15px"}}>X</button></th>
+                        <th>{props.title}{!props.isCheckoutPage ? <button onClick={handleShow} style={{borderRadius: "50%", border: "1px", float: "right", marginRight: "15px"}}>X</button> : ""}</th>
                     </tr>
                     <tr>
                         <td>Price:&nbsp;INR&nbsp;{props.price}</td>
@@ -34,10 +34,10 @@ function CartProductCard(props) {
                 </Modal.Header>
                 <Modal.Body>Are you sure you want to remove the following product from the cart?</Modal.Body>
                 <Modal.Footer>
-                    <Button variant="danger" onClick={handleClose}>
+                    <Button variant="outline-danger" onClick={handleClose}>
                         No
                     </Button>
-                    <Button variant="secondary" onClick={removeBasketProductHandler}>
+                    <Button variant="outline-secondary" onClick={removeBasketProductHandler}>
                         Yes
                     </Button>
                 </Modal.Footer>

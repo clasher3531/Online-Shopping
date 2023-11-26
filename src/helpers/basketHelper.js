@@ -1,3 +1,5 @@
+var Constants =  require('../Config/Constants.json');
+
 function getBasket() {
     var currentBasket = localStorage.getItem('Basket');
     return currentBasket ? JSON.parse(currentBasket) : null;
@@ -19,7 +21,13 @@ function getOrNewBasket() {
             products: [],
             count: 0,
             id: Math.floor(Math.random() * 9999),
-            totalPrice: 0
+            totalPrice: 0,
+            shippingAddress: {},
+            email: "",
+            shippingMethod: "Standard Delivery",
+            shippingMethodPrice: 0,
+            taxPrice: 0,
+            totalNetPrice: 0
         }
         localStorage.setItem('Basket', JSON.stringify(basket));
         return basket;
@@ -34,6 +42,16 @@ function getTotalPrice(basket) {
         })
     }
     return price.toString();
+}
+
+function calculateTotalNetPrice(price) {
+    var netPrice = price + ((Constants.taxPercentage * price)/100);
+    return parseFloat(netPrice).toFixed(2).toString();
+}
+
+function calculateTax(price) {
+    var taxPrice = (Constants.taxPercentage * price)/100;
+    return parseFloat(taxPrice).toFixed(2).toString();
 }
 
 function addProductToBasket(basket, product) {
@@ -53,6 +71,8 @@ function addProductToBasket(basket, product) {
         }
         var totalPrice = getTotalPrice(basket);
         basket.totalPrice = parseFloat(totalPrice).toFixed(2).toString();
+        basket.totalNetPrice = calculateTotalNetPrice(parseFloat(totalPrice));
+        basket.taxPrice = calculateTax(parseFloat(totalPrice));
         basket.count = basket.products.length;
         localStorage.setItem('Basket', JSON.stringify(basket));
     }
@@ -72,7 +92,59 @@ function removeProductFromBasket(pid) {
         })
         currentBasket.totalPrice = (currentBasket.totalPrice - (parseFloat(productPrice) * qty)).toString();
         currentBasket.totalPrice = parseFloat(currentBasket.totalPrice).toFixed(2).toString();
+        currentBasket.totalNetPrice = calculateTotalNetPrice(parseFloat(currentBasket.totalPrice));
+        currentBasket.taxPrice = calculateTax(parseFloat(currentBasket.totalPrice));
         currentBasket.count = currentBasket.products.length;
+        setBasket(currentBasket);
+    }
+}
+
+function setShippingAddress(shippingAddress) {
+    var currentBasket = getBasket();
+    if (shippingAddress === null || currentBasket===null) {
+        return "";
+    } else {
+        currentBasket.shippingAddress = shippingAddress;
+        setBasket(currentBasket);
+    }
+}
+
+function setEmailAddress(email) {
+    var currentBasket = getBasket();
+    if (email === null || currentBasket === null) {
+        return ""
+    } else {
+        currentBasket.email = email;
+        setBasket(currentBasket);
+    }
+}
+
+function validateShippingAddress() {
+    var currentBasket = getBasket();
+    if (currentBasket === null || currentBasket.shippingAddress === null || currentBasket.email === null) {
+        return false;
+    } else {
+        var shippingAddress = currentBasket.shippingAddress;
+        if (shippingAddress.title === null || shippingAddress.firstName === null || shippingAddress.lastName === null || shippingAddress.city === null || shippingAddress.zip === null || shippingAddress.state === null || shippingAddress.address1 === null) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+}
+
+function shippingMethodChangeNetPrice(data) {
+    var currentBasket = getBasket();
+    if (currentBasket) {
+        if (data.shippingMethod === Constants.STDMETHOD && currentBasket.shippingMethod === Constants.SATMETHOD) {
+            currentBasket.shippingMethod = data.shippingMethod;
+            currentBasket.shippingMethodPrice = data.shippingPrice;
+            currentBasket.totalNetPrice = parseFloat(parseFloat(currentBasket.totalNetPrice) - Constants.satDeliveryPrice).toFixed(2).toString();
+        } else if (data.shippingMethod === Constants.SATMETHOD && currentBasket.shippingMethod === Constants.STDMETHOD) {
+            currentBasket.shippingMethod = data.shippingMethod;
+            currentBasket.shippingMethodPrice = data.shippingPrice;
+            currentBasket.totalNetPrice = parseFloat(parseFloat(currentBasket.totalNetPrice) + Constants.satDeliveryPrice).toFixed(2).toString();
+        }
         setBasket(currentBasket);
     }
 }
@@ -82,5 +154,9 @@ module.exports = {
     setBasket: setBasket,
     getOrNewBasket: getOrNewBasket,
     addProductToBasket: addProductToBasket,
-    removeProductFromBasket: removeProductFromBasket
+    removeProductFromBasket: removeProductFromBasket,
+    setShippingAddress: setShippingAddress,
+    setEmailAddress: setEmailAddress,
+    validateShippingAddress: validateShippingAddress,
+    shippingMethodChangeNetPrice: shippingMethodChangeNetPrice
 }

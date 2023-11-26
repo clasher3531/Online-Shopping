@@ -13,23 +13,13 @@ function CartPage() {
     React.useEffect(function() {
         var currentBasket = basketHelper.getBasket();
         if (currentBasket) {
-            var data = {}
-            data.products = currentBasket.products;
-            data.count = currentBasket.count;
-            data.id = currentBasket.id;
-            data.totalPrice = currentBasket.totalPrice;
-            setBasket(data);
+            setBasket(currentBasket);
         }
     }, [basket.id, basket.totalPrice]);
     function cartProductRemoveBasketHandler() {
         var currentBasket = basketHelper.getBasket();
         if (currentBasket) {
-            var data = {}
-            data.products = currentBasket.products;
-            data.count = currentBasket.count;
-            data.id = currentBasket.id;
-            data.totalPrice = currentBasket.totalPrice;
-            setBasket(data);
+            setBasket(currentBasket);
         }
     }
     return (
@@ -44,7 +34,7 @@ function CartPage() {
                     </div>
                 </Col>
                 <Col xs={12} md={5} lg={4}>
-                    <CartPageSubTotal totalPrice={basket.totalPrice} count={basket.count}/>
+                    <CartPageSubTotal totalPrice={basket.totalPrice} count={basket.count} taxPrice={basket.taxPrice}/>
                 </Col>
             </Row>
             </Container>
