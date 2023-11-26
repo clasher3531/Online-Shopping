@@ -1,7 +1,12 @@
 import React from "react";
 import Button from 'react-bootstrap/Button';
+import { useNavigate } from "react-router";
 
 function CartPageSubTotal(props) {
+    const navigate = useNavigate();
+    function checkoutButtonHandler() {
+        navigate('/checkout');
+    }
     return (
         <div className="cartpage-subtotal" style={{border:"2px solid grey", width:"20rem", height:"12rem", marginTop:"1rem", marginLeft:"4rem", padding:"20px 30px 20px 30px"}}>
             <div className="subtotal-section">
@@ -11,11 +16,11 @@ function CartPageSubTotal(props) {
                 </div>
                 <div className="d-flex justify-content-between" style={{margin:"10px 2px 10px 2px"}}>
                     <div>Sales Tax</div>
-                    <div>INR 0</div>
+                    <div>INR&nbsp;{props.taxPrice}</div>
                 </div>
             </div>
             {props.count > 0 ? <div className="proceed-checkout-button" style={{margin:"30px 2px 10px 2px"}}>
-                <Button variant="secondary" style={{width:"16rem"}}>PROCEED TO CHECKOUT</Button>
+                <Button variant="secondary" style={{width:"16rem"}} onClick={checkoutButtonHandler}>PROCEED TO CHECKOUT</Button>
             </div>: ""}
         </div>
     )

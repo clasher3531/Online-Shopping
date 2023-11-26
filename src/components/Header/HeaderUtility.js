@@ -9,12 +9,7 @@ function HeaderUtility(props) {
     function productRemoveBasketHandler() {
         var currentBasket = basketHelper.getBasket();
         if (currentBasket) {
-            var data = {}
-            data.products = currentBasket.products;
-            data.count = currentBasket.count;
-            data.id = currentBasket.id;
-            data.totalPrice = currentBasket.totalPrice;
-            props.setBasketData(data);
+            props.setBasketData(currentBasket);
         }
     }
     

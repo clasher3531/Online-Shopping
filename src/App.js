@@ -1,17 +1,18 @@
 import React from "react";
-import {connect} from 'react-redux';
 import HomePage from "./components/HomePage";
 import CartPage from "./components/Cart/CartPage";
+import CheckoutPage from "./components/Checkout/CheckoutPage";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import './App.css';
 
-function App(props) {
+function App() {
     return (
       <div className='App'>
         <Router> 
           <Routes> 
-            <Route path="/" element={<HomePage isActive={props.isActive}/>}/>  
+            <Route path="/" element={<HomePage/>}/>  
             <Route path="/cart" element={<CartPage/>}/>
+            <Route path="/checkout" element={<CheckoutPage/>}/>
           </Routes> 
         </Router> 
         
@@ -19,10 +20,4 @@ function App(props) {
   );
 }
 
-const mapStateToProps = state => {
-  return {
-      isActive:  state.isLoading
-  }
-}
-
-export default connect(mapStateToProps)(App);
+export default App;

@@ -3,14 +3,10 @@ import basketHelper from '../../helpers/basketHelper';
 import getProduct from '../../helpers/productHelper';
 import Modal from '../../Utility/Modal';
 import ModalProductCard from '../Product/ModalProductCard';
-import {useDispatch} from 'react-redux'
-import {setLoader} from '../../store';
 
 function ProductCard(props) {
-    const dispatch = useDispatch()
     var [modalShow, setModalShow] = React.useState(false);
     function addToCartButtonClickHandler() {
-        dispatch(setLoader(true));
         var product = getProduct(props.id);
         var basket = basketHelper.getOrNewBasket();
         basketHelper.addProductToBasket(basket, product);
