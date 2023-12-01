@@ -36,12 +36,12 @@ function CheckoutPage() {
             <div className="checkout-section">
                 <Container>
                     <Row>
-                        <Col xs={12} md={7} lg={7}>
+                        <Col xs={12} sm={12} md={12} lg={7}>
                             <div className="checkout-login"><CheckoutLogin emailaddressbutton={emailAddressButton} basketData={basket} emailref={emailAddressInput}/></div>
                             <div className="checkout-shipping"><CheckoutShipping shippingbuttonref={shippingButton} shippingAddress={basket.shippingAddress} emailrefinput={emailAddressInput}/></div>
                             <div className="checkout-shipping-method"><CheckoutShippingMethod shippingmethodchangehandler={shippingMethodChangeHandler} selectedshippingmethod={basket.shippingMethod}/></div>
                         </Col>
-                        <Col xs={12} md={5} lg={5}>
+                        <Col xs={12} sm={12} md={12} lg={5}>
                             <div className="checkout-summary"><CheckoutSummary basketData={basket} shippingbuttonref={shippingButton} emailaddressbutton={emailAddressButton}/></div>
                         </Col>
                     </Row>

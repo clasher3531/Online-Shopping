@@ -37,6 +37,7 @@ function CheckoutShipping(props) {
             basketHelper.setShippingAddress(formData);
             var email = emailRegex.test(props.emailrefinput.current.value);
             if (email) {
+                basketHelper.copyShippingAddressToBilling();
                 navigate("/checkout-payment");
             }
         }
@@ -160,7 +161,7 @@ function CheckoutShipping(props) {
                 <Row className="mb3">
                     <Form.Group as={Col} controlId="formGridPhone">
                         <Form.Label>Phone Number</Form.Label>
-                        <Form.Control type="number" required name="phone" value={shippingAddress && shippingAddress.phone ? shippingAddress.phone : ""} onChange={phoneNumberChangeHandler}/>
+                        <Form.Control type="number" required name="phone" value={shippingAddress && shippingAddress.phone ? shippingAddress.phone : ""} max={9999999999} onChange={phoneNumberChangeHandler}/>
                         <Form.Control.Feedback type="invalid">Please Enter Valid Phone Number</Form.Control.Feedback>
                     </Form.Group>
                 </Row>
