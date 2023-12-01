@@ -5,6 +5,8 @@ import Button from 'react-bootstrap/Button';
 import CartProductList from "../Cart/CartProductList";
 import CheckoutSummarySubTotal from "./CheckoutSummarySubTotal";
 import { useNavigate } from "react-router-dom";
+import basketHelper from "../../helpers/basketHelper";
+import orderHelper from "../../helpers/orderHelper";
 
 function CheckoutSummary(props) {
     const navigate = useNavigate();
@@ -14,6 +16,21 @@ function CheckoutSummary(props) {
     function proccedPaymentHandler() {
         props.emailaddressbutton.current.click();
         props.shippingbuttonref.current.click();
+    }
+    function proceedReviewHandler() {
+        props.paymentbuttonref.current.click();
+    }
+    function placeOrderButtonHandler() {
+        var currentBasket = basketHelper.getBasket();
+        if (currentBasket) {
+            var order = orderHelper.createOrder(currentBasket);
+            if (order) {
+                var authorizationResult = orderHelper.handlePayment(order);
+                if (authorizationResult.success) {
+                    navigate("/order-confirm", {state: order.orderNo});
+                }
+            }
+        }
     }
     return (
         <div className="checkout-summary-main">
@@ -29,7 +46,9 @@ function CheckoutSummary(props) {
             <CartProductList basketData={props.basketData} isCheckoutPage={true}/>
             <CheckoutSummarySubTotal totalprice={props.basketData.totalPrice} shippingmethod={props.basketData.shippingMethod} shippingprice={props.basketData.shippingMethodPrice} totaltax={props.basketData.taxPrice} netprice={props.basketData.totalNetPrice}/>
             {props.basketData.count > 0 ? <div className="proceed-checkout-payment-details">
-                <Button variant="secondary" style={{width:"100%"}} onClick={proccedPaymentHandler}>PROCEED TO PAYMENT DETAILS</Button>
+                {!props.isPaymentPage ? <Button variant="secondary" style={{width:"100%"}} onClick={proccedPaymentHandler}>PROCEED TO PAYMENT DETAILS</Button> : 
+                !props.isReviewPage ? <Button variant="secondary" style={{width:"100%"}} onClick={proceedReviewHandler}>REVIEW YOUR ORDER</Button> : 
+                <Button variant="secondary" style={{width:"100%"}} onClick={placeOrderButtonHandler}>PLACE YOUR ORDER</Button>}
             </div>: ""}
         </div>
     )

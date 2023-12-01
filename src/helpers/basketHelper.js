@@ -1,19 +1,19 @@
 var Constants =  require('../Config/Constants.json');
 
 function getBasket() {
-    var currentBasket = localStorage.getItem('Basket');
+    var currentBasket = sessionStorage.getItem('Basket');
     return currentBasket ? JSON.parse(currentBasket) : null;
 }
 
 function setBasket(basket) {
     if (basket) {
         var currentBasket = JSON.stringify(basket);
-        localStorage.setItem('Basket', currentBasket);
+        sessionStorage.setItem('Basket', currentBasket);
     }
 }
 
 function getOrNewBasket() {
-    var currentBasket = localStorage.getItem('Basket');
+    var currentBasket = sessionStorage.getItem('Basket');
     if (currentBasket) {
         return JSON.parse(currentBasket);
     } else {
@@ -23,13 +23,15 @@ function getOrNewBasket() {
             id: Math.floor(Math.random() * 9999),
             totalPrice: 0,
             shippingAddress: {},
+            billingAddress: {},
+            payment: {},
             email: "",
             shippingMethod: "Standard Delivery",
             shippingMethodPrice: 0,
             taxPrice: 0,
             totalNetPrice: 0
         }
-        localStorage.setItem('Basket', JSON.stringify(basket));
+        sessionStorage.setItem('Basket', JSON.stringify(basket));
         return basket;
     }
 }
@@ -74,7 +76,7 @@ function addProductToBasket(basket, product) {
         basket.totalNetPrice = calculateTotalNetPrice(parseFloat(totalPrice));
         basket.taxPrice = calculateTax(parseFloat(totalPrice));
         basket.count = basket.products.length;
-        localStorage.setItem('Basket', JSON.stringify(basket));
+        sessionStorage.setItem('Basket', JSON.stringify(basket));
     }
 }
 
@@ -149,6 +151,22 @@ function shippingMethodChangeNetPrice(data) {
     }
 }
 
+function copyShippingAddressToBilling() {
+    var currentBasket = getBasket();
+    if (currentBasket && currentBasket.shippingAddress) {
+        currentBasket.billingAddress = JSON.parse(JSON.stringify(currentBasket.shippingAddress));
+        setBasket(currentBasket);
+    }
+}
+
+function setPaymentInformation(data) {
+    var currentBasket = getBasket();
+    if (currentBasket && data) {
+        currentBasket.payment = data;
+        setBasket(currentBasket);
+    }
+}
+
 module.exports = {
     getBasket: getBasket,
     setBasket: setBasket,
@@ -158,5 +176,7 @@ module.exports = {
     setShippingAddress: setShippingAddress,
     setEmailAddress: setEmailAddress,
     validateShippingAddress: validateShippingAddress,
-    shippingMethodChangeNetPrice: shippingMethodChangeNetPrice
+    shippingMethodChangeNetPrice: shippingMethodChangeNetPrice,
+    copyShippingAddressToBilling: copyShippingAddressToBilling,
+    setPaymentInformation: setPaymentInformation
 }
