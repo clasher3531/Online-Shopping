@@ -8,7 +8,7 @@ function NJLogo() {
     }
     return (
         <div className="text-center">
-            <h1 onClick={logoClickHandler} style={{fontFamily:'fantasy', margin:'20px', cursor:'pointer'}}>N&N Collections</h1>
+            <h1 onClick={logoClickHandler} style={{fontFamily:'fantasy', margin:'20px', cursor:'pointer'}}>VogueVista</h1>
         </div>
     )
 }
