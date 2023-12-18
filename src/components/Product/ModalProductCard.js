@@ -1,22 +1,28 @@
 import React from "react";
+import { Container, Row, Col } from "react-bootstrap";
+import '../../css/ModalProduct.css';
 
 function ModalProductCard(props) {
     return (
         <div className="product-card">
-            <table style={{width: '100%',borderCollapse: 'collapse', borderSpacing:'0', backgroundColor: "#F2F2F2", marginTop: "20px", textAlign:"center"}}>
-                <tbody>
-                    <tr>
-                        <td rowSpan="3" style={{backgroundColor: "white", width: "100px"}}><img src={props.image} width="200px" height="200px" alt=""/></td>
-                        <th>{props.title}</th>
-                    </tr>
-                    <tr>
-                        <td>Price:&nbsp;INR&nbsp;{props.price}</td>
-                    </tr>
-                    <tr>
-                        <td>Qty: 1</td>
-                    </tr>
-                </tbody>
-            </table><br></br>
+            <Row>
+                <Col xs={12} sm={4} md={4} lg={4} className="float-left">
+                    <img className="modal-product-image" src={props.image} alt="" width="300px" height="300px"/>
+                </Col>
+                <Col xs={12} sm={8} md={8} lg={8} className="float-left">
+                    <Container className="modal-product-description">
+                        <Row className="modal-product-title">
+                            <Col>{props.title}</Col>
+                        </Row>
+                        <Row className="modal-product-title">
+                            <Col>Price:&nbsp;INR&nbsp;{props.price}</Col>
+                        </Row>
+                        <Row className="modal-product-title">
+                            <Col>Qty: 1</Col>
+                        </Row>
+                    </Container>
+                </Col>
+            </Row>
         </div>
     )
 }

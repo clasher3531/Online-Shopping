@@ -40,15 +40,15 @@ function CheckoutSummary(props) {
                     <p>{props.basketData.count}&nbsp;Item</p>
                 </Col>
                 <Col lg="4" sm="4" xs="4" md="4">
-                    <Button variant="secondary" onClick={modifyButtonHandler}>Modify</Button>
+                    <Button variant="dark" onClick={modifyButtonHandler}>Modify</Button>
                 </Col>
             </Row>
             <CartProductList basketData={props.basketData} isCheckoutPage={true}/>
             <CheckoutSummarySubTotal totalprice={props.basketData.totalPrice} shippingmethod={props.basketData.shippingMethod} shippingprice={props.basketData.shippingMethodPrice} totaltax={props.basketData.taxPrice} netprice={props.basketData.totalNetPrice}/>
             {props.basketData.count > 0 ? <div className="proceed-checkout-payment-details">
-                {!props.isPaymentPage ? <Button variant="secondary" style={{width:"100%"}} onClick={proccedPaymentHandler}>PROCEED TO PAYMENT DETAILS</Button> : 
-                !props.isReviewPage ? <Button variant="secondary" style={{width:"100%"}} onClick={proceedReviewHandler}>REVIEW YOUR ORDER</Button> : 
-                <Button variant="secondary" style={{width:"100%"}} onClick={placeOrderButtonHandler}>PLACE YOUR ORDER</Button>}
+                {!props.isPaymentPage ? <Button variant="dark" style={{width:"100%"}} onClick={proccedPaymentHandler}>PROCEED TO PAYMENT DETAILS</Button> : 
+                !props.isReviewPage ? <Button variant="dark" style={{width:"100%"}} onClick={proceedReviewHandler}>REVIEW YOUR ORDER</Button> : 
+                <Button variant="dark" style={{width:"100%"}} onClick={placeOrderButtonHandler}>PLACE YOUR ORDER</Button>}
             </div>: ""}
         </div>
     )

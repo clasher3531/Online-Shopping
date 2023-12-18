@@ -9,7 +9,7 @@ function MiniCart(props) {
         navigate('/cart');
     }
     return (
-        <div className="offcanvas offcanvas-end" data-bs-scroll="true" data-bs-backdrop="false" tabIndex="-1" id="offcanvasScrolling" aria-labelledby="offcanvasScrollingLabel">
+        <div className="offcanvas offcanvas-end" data-bs-scroll="true" data-bs-backdrop="false" tabIndex="-1" id="offcanvasScrolling" aria-labelledby="offcanvasScrollingLabel" style={{width:"30rem"}}>
             <div className="offcanvas-header">
                 <h3 className="offcanvas-title" id="offcanvasScrollingLabel">Shopping Cart{props.basketData && props.basketData.products && props.basketData.products.length > 0 ? '(' + props.basketData.products.length + ')' : ""}</h3>
                 <button type="button" className="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
@@ -26,7 +26,7 @@ function MiniCart(props) {
                 </div>
                 <div style={{fontSize: 'small', marginLeft:'10px'}}>Shipping and taxes calculated at checkout.</div>
                 <div className="proceed-checkout-button d-grid gap-2" style={{margin:"15px 10px 10px 10px"}}>
-                    <Button variant="secondary" size="lg" onClick={checkoutButtonHandler}>Proceed To Checkout</Button>
+                    <Button variant="dark" size="lg" onClick={checkoutButtonHandler}>PROCEED TO CART</Button>
                 </div>
             </div>
              : ""}

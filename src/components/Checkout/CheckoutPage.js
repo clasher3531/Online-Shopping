@@ -8,6 +8,7 @@ import CheckoutLogin from "./CheckoutLogin";
 import CheckoutShipping from "./CheckoutShipping";
 import CheckoutShippingMethod from "./CheckoutShippingMethod";
 import CheckoutSummary from "./CheckoutSummary";
+import Footer from '../Footer/Footer';
 import "../../css/checkout/checkout.css";
 
 function CheckoutPage() {
@@ -47,6 +48,7 @@ function CheckoutPage() {
                     </Row>
                 </Container>
             </div>
+            <Footer/>
         </div>
     )
 }

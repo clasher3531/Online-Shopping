@@ -1,10 +1,17 @@
 import React from "react";
+import { Row, Col } from 'react-bootstrap';
 
 function CartPageHeading(props) {
     return (
-        <div className="d-flex justify-content-center flex cartpage-heading" style={{marginTop:"5rem", marginBottom:"6rem", textAlign:"center", fontSize:"30px", fontWeight:"200"}}>
-            <div style={{marginRight:"3px"}}><h1>Shopping Bag</h1></div>
-            <div>{"(" + (props.count > 0 ? props.count > 1 ? props.count + " Items" : "1 Item" : "0 Item") + ")"}</div>
+        <div className="cartpage-heading">
+            <Row>
+                <Col xs={7} sm={7} md={7} lg={6} className="shopping-bag-heading">
+                    <div><h1>Shopping Bag</h1></div>
+                </Col>
+                <Col xs={5} sm={5} md={5} lg={6} className="shopping-bag-count">
+                    <div><h1>{"(" + (props.count > 0 ? props.count > 1 ? props.count + " Items" : "1 Item" : "0 Item") + ")"}</h1></div>
+                </Col>
+            </Row>
         </div>
     )
 }

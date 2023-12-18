@@ -22,7 +22,7 @@ function MyModal(props) {
             <h4>{props.modalsubheading}</h4>
             {props.modaldescription}
           </Modal.Body>
-          <Modal.Footer><Button variant="secondary" onClick={buttonClickHandler}>{props.modalbuttontext}</Button></Modal.Footer>
+          <Modal.Footer><Button variant="dark" onClick={buttonClickHandler}>{props.modalbuttontext}</Button></Modal.Footer>
         </Modal>
       </div>
     );
