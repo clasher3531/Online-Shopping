@@ -7,6 +7,8 @@ import HeaderUtility from "../Header/HeaderUtility";
 import CartProductList from "../Cart/CartProductList";
 import CartPageHeading from "./CartPageHeading";
 import CartPageSubTotal from "./CartPageSubTotal";
+import Footer from '../Footer/Footer';
+import '../../css/Cart.css';
 
 function CartPage() {
     var [basket, setBasket] = React.useState({});
@@ -24,20 +26,21 @@ function CartPage() {
     }
     return (
         <div className="cartPage">
-            <HeaderUtility basketData={basket} setBasketData={setBasket} iscartpage={true}/><hr/>
+            <HeaderUtility basketData={basket} setBasketData={setBasket} iscartpage={true}/>
             <CartPageHeading count={basket.count}/>
             <Container>
-            <Row>
-                <Col xs={12} md={7} lg={8}>
-                    <div className="cartPage-main">
-                        {basket && basket.products && basket.products.length > 0 ? <CartProductList basketData={basket} cartProductRemoveBasketHandler={cartProductRemoveBasketHandler}/>:<p style={{fontWeight:"500"}}>No Items in the cart</p>}
-                    </div>
-                </Col>
-                <Col xs={12} md={5} lg={4}>
-                    <CartPageSubTotal totalPrice={basket.totalPrice} count={basket.count} taxPrice={basket.taxPrice}/>
-                </Col>
-            </Row>
+                <Row>
+                    <Col xs={12} sm={12} md={12} lg={7}>
+                        <div className="cartPage-main">
+                            {basket && basket.products && basket.products.length > 0 ? <CartProductList basketData={basket} cartProductRemoveBasketHandler={cartProductRemoveBasketHandler}/>:<p style={{fontWeight:"500"}}>No Items in the cart</p>}
+                        </div>
+                    </Col>
+                    <Col xs={12} sm ={12} md={12} lg={5}>
+                        <CartPageSubTotal totalPrice={basket.totalPrice} count={basket.count} taxPrice={basket.taxPrice}/>
+                    </Col>
+                </Row>
             </Container>
+            <Footer/>
         </div>
     )
 }

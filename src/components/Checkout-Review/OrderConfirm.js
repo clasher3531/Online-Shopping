@@ -3,6 +3,7 @@ import basketHelper from "../../helpers/basketHelper";
 import HeaderUtility from "../Header/HeaderUtility";
 import ConfirmationSummary from "./ConfirmationSummary";
 import {useLocation} from 'react-router-dom';
+import Footer from '../Footer/Footer';
 import "../../css/checkout-payment/checkoutPayment.css";
 
 function OrderConfirm() {
@@ -19,6 +20,7 @@ function OrderConfirm() {
         <div className="order-confirm" onLoad={onLoadHandler}>
             <HeaderUtility basketData={basketData} setBasketData={setBasketData}/>
             <ConfirmationSummary orderNo={orderNo}/>
+            <Footer/>
         </div>
     )
 }

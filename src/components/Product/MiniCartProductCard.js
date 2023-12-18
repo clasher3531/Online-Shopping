@@ -1,5 +1,7 @@
 import React from "react";
 import basketHelper from "../../helpers/basketHelper";
+import { Container, Row, Col } from "react-bootstrap";
+import '../../css/MiniCartProductCard.css';
 
 function MiniCartProductCard(props) {
     function removeBasketProductHandler() {
@@ -7,21 +9,30 @@ function MiniCartProductCard(props) {
         props.productRemoveBasketHandler();
     }
     return (
-        <div className="product-card">
-            <table style={{width: '100%',borderCollapse: 'collapse', borderSpacing:'0', backgroundColor: "#F2F2F2", textAlign:"center"}}>
-                <tbody>
-                    <tr>
-                        <td rowSpan="3" style={{backgroundColor: "white", width: "100px"}}><img src={props.image} width="100px" height="125px" alt=""/></td>
-                        <th>{props.title}<button onClick={removeBasketProductHandler} style={{borderRadius: "50%", border: "1px", float: "right", marginRight: "5px"}}>X</button></th>
-                    </tr>
-                    <tr>
-                        <td>INR&nbsp;{props.price}</td>
-                    </tr>
-                    <tr>
-                        <td>Qty:&nbsp;{props.qty}</td>
-                    </tr>
-                </tbody>
-            </table><br></br>
+        <div className="minicart-product-card">
+            <Row>
+                <Col xs={2} sm={4} md={4} lg={4} className="minicart-float-left">
+                    <img className="minicart-product-image" src={props.image} alt="" width="150px" height="150px"/>
+                </Col>
+                <Col xs={10} sm={8} md={8} lg={8} className="minicart-description-section">
+                    <Container className="minicart-product-description">
+                        <Row className="mini-cart-close-icon">
+                            <Col><button onClick={removeBasketProductHandler} style={{borderRadius: "50%", border: "1px", float: "right"}}>X</button></Col>
+                        </Row>
+                        <Row className="minicart-product-title">
+                            <Col>
+                                {props.title}
+                            </Col>
+                        </Row>
+                        <Row className="minicart-product-title">
+                            <Col>Price:&nbsp;INR&nbsp;{props.price}</Col>
+                        </Row>
+                        <Row className="minicart-product-title">
+                            <Col>Qty:&nbsp;{props.qty}</Col>
+                        </Row>
+                    </Container>
+                </Col>
+            </Row><br></br>
         </div>
     )
 }

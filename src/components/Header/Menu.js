@@ -2,24 +2,26 @@ import React from "react";
 
 function Menu() {
     return (
-        <ul className="nav justify-content-center">
-            <li className="nav-item">
-                <a className="nav-link" style={{color:'grey'}} href="*">Mens</a>
+        <ul className="nav justify-content-center menu">
+            <li className="nav-item menu-item">
+                <a className="nav-link" href="/">Home</a>
             </li>
-            <li className="nav-item">
-                <a className="nav-link" style={{color:'grey'}} href="*">Womens</a>
+            <li class="nav-item menu-item">
+                <a className="nav-link" href="*" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    Shop
+                </a>
+                <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <li><a className="dropdown-item" href="/products/mens-clothing">Men</a></li>
+                    <li><a className="dropdown-item" href="/products/women-clothing">Women</a></li>
+                    <li><a className="dropdown-item" href="/products/jewellery">Jewellery</a></li>
+                    <li><a className="dropdown-item" href="/products/electronics">Electronics</a></li>
+                </ul>
             </li>
-            <li className="nav-item">
-                <a className="nav-link" style={{color:'grey'}} href="*">Kids</a>
+            <li className="nav-item menu-item">
+                <a className="nav-link" href="*">Services</a>
             </li>
-            <li className="nav-item">
-                <a className="nav-link" style={{color:'grey'}} href="*">Toys</a>
-            </li>
-            <li className="nav-item">
-                <a className="nav-link" style={{color:'grey'}} href="*">Bags & Accesories</a>
-            </li>
-            <li className="nav-item">
-                <a className="nav-link" style={{color:'grey'}} href="*">Electronics</a>
+            <li className="nav-item menu-item">
+                <a className="nav-link" href="*">Contact us</a>
             </li>
         </ul>
     )

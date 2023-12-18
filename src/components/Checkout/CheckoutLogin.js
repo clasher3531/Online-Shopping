@@ -56,8 +56,8 @@ function CheckoutLogin(props) {
                         <Col className="login-container" lg="6" sm="12">
                             <h5 className="login-heading">LOGIN</h5>
                             <p>Coming Soon</p>
-                            <Button className="register-button" variant="secondary" size="sm" disabled>Register</Button>
-                            <Button variant="secondary" size="sm" disabled>Login</Button>
+                            <Button className="register-button" variant="dark" size="sm" disabled>Register</Button>
+                            <Button variant="dark" size="sm" disabled>Login</Button>
                         </Col>
                     </Row>
                 </Container>

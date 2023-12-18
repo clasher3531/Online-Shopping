@@ -7,6 +7,7 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import CheckoutSummary from "../Checkout/CheckoutSummary";
 import CheckoutBillingSection from "./CheckoutBillingSection";
+import Footer from '../Footer/Footer';
 import "../../css/checkout-payment/checkoutPayment.css";
 
 function CheckoutPaymentPage() {
@@ -36,6 +37,7 @@ function CheckoutPaymentPage() {
                     </Row>
                 </Container>
             </div>
+            <Footer/>
         </div>
     )
 }
