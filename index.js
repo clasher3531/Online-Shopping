@@ -1,12 +1,18 @@
 const express = require('express');
 const path = require('path');
+const dotenv = require('dotenv');
+dotenv.config()
+
 const app = express();
 const port = process.env.PORT || 9000;
 
-app.use(express.static(path.join(__dirname, 'build')));
+const buildPath = path.join(__dirname, 'build');
 
-app.get('/*', function (req, res) {
-  res.sendFile(path.join(__dirname, 'build', 'index.html'));
+app.use(express.static(buildPath));
+app.use(express.json())
+
+app.get('*', function (req, res) {
+  res.sendFile(path.join(buildPath, 'index.html'));
 });
 
 app.listen(port, () => {
