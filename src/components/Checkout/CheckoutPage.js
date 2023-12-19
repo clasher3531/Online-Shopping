@@ -21,6 +21,7 @@ function CheckoutPage() {
         if (currentBasket) {
             setBasket(currentBasket);
         }
+        window.scrollTo({top: 0, left: 0, behavior: 'smooth'})
     }, [basket.id, basket.totalPrice]);
     function shippingMethodChangeHandler(shipMethodData) {
         basketHelper.shippingMethodChangeNetPrice(shipMethodData);

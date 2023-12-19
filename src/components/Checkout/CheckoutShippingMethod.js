@@ -34,6 +34,7 @@ function CheckoutShippingMethod(props) {
                 stdDelivery.current.checked = true;
             }
         }
+        window.scrollTo({top: 0, left: 0, behavior: 'smooth'})
     }, [stdDelivery, satDelivery])
     return (
         <div className="checkout-shipping-method">
