@@ -52,7 +52,7 @@ customerSchema.methods.toJSON = function() {
 
 customerSchema.methods.generateAuthToken = async function() {
     var customer = this;
-    var token = jwt.sign({_id: customer._id.toString()}, '$2a$08$p8PwLhhGic2MkzreuKqyZ.GIlSAdGzBdgdkWN96AtRa2.rUzTUXFq');
+    var token = jwt.sign({_id: customer._id.toString()}, process.env.TOKEN_SIGN);
     customer.tokens = customer.tokens.concat({ token });
     await customer.save();
     return token;
