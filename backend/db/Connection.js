@@ -1,4 +1,4 @@
 const mongoose = require('mongoose');
-const url = "mongodb+srv://nikhiljoshi:NikhilClasher1234@nikhilcluster.gmvscdv.mongodb.net/Customers?retryWrites=true&w=majority"
+const url = process.env.MONGO_URL;
 mongoose.set('strictQuery', false);
 mongoose.connect(url);
