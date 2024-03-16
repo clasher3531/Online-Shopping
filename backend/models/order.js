@@ -1,6 +1,10 @@
 const mongoose = require('mongoose');
 
-const basketSchema = new mongoose.Schema({
+const orderSchema = new mongoose.Schema({
+    orderNumber: {
+        type: String,
+        required: true
+    },
     products: [{
         id: {
             type: Number
@@ -63,6 +67,9 @@ const basketSchema = new mongoose.Schema({
     payment: {
         type: Object
     },
+    transactionId: {
+        type: String
+    },
     shippingMethod: {
         type: String,
         required: true
@@ -93,11 +100,11 @@ const basketSchema = new mongoose.Schema({
     }
 })
 
-basketSchema.methods.toJSON = function() {
-    var basket = this;
-    var basketObj = basket.toObject();
-    return basketObj;
+orderSchema.methods.toJSON = function() {
+    var order = this;
+    var orderObj = order.toObject();
+    return orderObj;
 }
 
-const Basket = mongoose.model('Basket', basketSchema);
-module.exports = Basket;
+const Order = mongoose.model('Order', orderSchema);
+module.exports = Order;

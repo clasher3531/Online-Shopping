@@ -4,7 +4,7 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
-import basketHelper from "../../helpers/basketHelper";
+import {setPaymentInformation} from "../../helpers/basketHelper";
 import { useNavigate } from "react-router-dom";
 
 function CheckoutBillingSection(props) {
@@ -25,8 +25,13 @@ function CheckoutBillingSection(props) {
                 cardCVV: form.cardCVV.value,
                 cardOwner: form.cardOwner.value
             }
-            basketHelper.setPaymentInformation(paymentData);
-            navigate("/checkout-review");
+            setPaymentInformation(paymentData).then((basketResponse) => {
+                if (basketResponse) {
+                    navigate("/checkout-review");
+                }
+            }).catch((e) => {
+                return null;
+            })
         }
         setValidated(true);
     };

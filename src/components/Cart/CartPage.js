@@ -2,7 +2,7 @@ import React from "react";
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import basketHelper from "../../helpers/basketHelper";
+import {getBasket} from "../../helpers/basketHelper";
 import HeaderUtility from "../Header/HeaderUtility";
 import CartProductList from "../Cart/CartProductList";
 import CartPageHeading from "./CartPageHeading";
@@ -13,17 +13,23 @@ import '../../css/Cart.css';
 function CartPage() {
     var [basket, setBasket] = React.useState({});
     React.useEffect(function() {
-        var currentBasket = basketHelper.getBasket();
-        if (currentBasket) {
-            setBasket(currentBasket);
-        }
-        window.scrollTo({top: 0, left: 0, behavior: 'smooth'})
+        getBasket().then((currentBasket)=>{
+            if (currentBasket) {
+                setBasket(currentBasket);
+                window.scrollTo({top: 0, left: 0, behavior: 'smooth'})
+            }
+        }).catch((e) => {
+            return null
+        })
     }, [basket.id, basket.totalPrice]);
     function cartProductRemoveBasketHandler() {
-        var currentBasket = basketHelper.getBasket();
-        if (currentBasket) {
-            setBasket(currentBasket);
-        }
+        getBasket().then((currentBasket)=>{
+            if (currentBasket) {
+                setBasket(currentBasket);
+            }
+        }).catch((e) => {
+            return null
+        })
     }
     return (
         <div className="cartPage">

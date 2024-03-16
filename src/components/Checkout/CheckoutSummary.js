@@ -5,8 +5,8 @@ import Button from 'react-bootstrap/Button';
 import CartProductList from "../Cart/CartProductList";
 import CheckoutSummarySubTotal from "./CheckoutSummarySubTotal";
 import { useNavigate } from "react-router-dom";
-import basketHelper from "../../helpers/basketHelper";
-import orderHelper from "../../helpers/orderHelper";
+import {getBasket} from "../../helpers/basketHelper";
+import {createOrderFromBasket, handlePayment} from "../../helpers/orderHelper";
 
 function CheckoutSummary(props) {
     const navigate = useNavigate();
@@ -20,14 +20,14 @@ function CheckoutSummary(props) {
     function proceedReviewHandler() {
         props.paymentbuttonref.current.click();
     }
-    function placeOrderButtonHandler() {
-        var currentBasket = basketHelper.getBasket();
+    async function placeOrderButtonHandler() {
+        var currentBasket = await getBasket();
         if (currentBasket) {
-            var order = orderHelper.createOrder(currentBasket);
+            var order = await createOrderFromBasket(currentBasket);
             if (order) {
-                var authorizationResult = orderHelper.handlePayment(order);
+                var authorizationResult = await handlePayment(order);
                 if (authorizationResult.success) {
-                    navigate("/order-confirm", {state: order.orderNo});
+                    navigate("/order-confirm", {state: order.orderNumber});
                 }
             }
         }

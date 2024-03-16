@@ -1,6 +1,6 @@
 import React from "react";
 import CheckoutShippingSummary from "./CheckoutShippingSummary";
-import basketHelper from "../../helpers/basketHelper";
+import {getBasket} from "../../helpers/basketHelper";
 import NJLogo from "../Header/NJLogo";
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
@@ -14,11 +14,14 @@ function CheckoutPaymentPage() {
     var [basket, setBasket] = React.useState({});
     var paymentButtonRef = React.createRef();
     React.useEffect(function() {
-        var currentBasket = basketHelper.getBasket();
-        if (currentBasket) {
-            setBasket(currentBasket);
-        }
-        window.scrollTo({top: 0, left: 0, behavior: 'smooth'})
+        getBasket().then((currentBasket)=>{
+            if (currentBasket) {
+                setBasket(currentBasket);
+                window.scrollTo({top: 0, left: 0, behavior: 'smooth'})
+            }
+        }).catch((e) => {
+            return null
+        })
     }, [basket.id, basket.totalPrice]);
     return (
         <div className="checkout-payment-page-main">

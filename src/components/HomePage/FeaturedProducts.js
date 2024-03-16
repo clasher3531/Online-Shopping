@@ -1,9 +1,23 @@
 import React from "react";
-import ProductData from '../../Config/Products.json';
+import {fetchAllProducts} from '../../services/productFetchService';
 import ProductCard from "../Product/ProductCard";
 import { Row, Col} from "react-bootstrap";
 
 function FeaturedProducts() {
+    var [ProductData, setProducts] = React.useState([]);
+    function getProductData() {
+        fetchAllProducts().then((productResponse) => {
+            if (productResponse.error && (!productResponse.error && productResponse.products.length === 0)) {
+                return setProducts([]);
+            }
+            setProducts(productResponse.products)
+        }).catch((e) => {
+            setProducts([]);
+        })
+    }
+    React.useEffect(function() {
+        getProductData();
+    }, [])
     return (
         <div className="featured-main">
             <div className="featured-heading">

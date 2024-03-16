@@ -1,16 +1,18 @@
 import React from "react";
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
-import basketHelper from "../../helpers/basketHelper";
+import {removeProductFromBasket} from "../../helpers/basketHelper";
 
 function CartProductCard(props) {
     const [show, setShow] = React.useState(false);
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
-    function removeBasketProductHandler() {
-        basketHelper.removeProductFromBasket(props.id);
-        props.cartProductRemoveBasketHandler();
-        handleClose();
+    async function removeBasketProductHandler() {
+        var basket = await removeProductFromBasket(props.id);
+        if (basket) {
+            props.cartProductRemoveBasketHandler();
+            handleClose();
+        }
     }
     return (
         <div className="cart-product-card">

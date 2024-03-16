@@ -3,16 +3,24 @@ import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
-import basketHelper from "../../helpers/basketHelper";
+import {getBasket, setBasketShippingAddress, copyShippingAddressToBilling} from "../../helpers/basketHelper";
 import { useNavigate } from "react-router-dom";
 const emailRegex = /[A-Za-z0-9._%+]+@[a-z0-9A-Z]+\.[a-z]{2,}$/;
 
 function CheckoutShipping(props) {
     const navigate = useNavigate();
     const [validated, setValidated] = React.useState(false);
-    var basketShippingAddress = basketHelper.getBasket().shippingAddress;
-    const [shippingAddress, setShippingAddress] = React.useState(basketShippingAddress);
-    const handleSubmit = (event) => {
+    const [shippingAddress, setShippingAddress] = React.useState({});
+    React.useEffect(function() {
+        getBasket().then((currentBasket)=>{
+            if (currentBasket) {
+                setShippingAddress(currentBasket.shippingAddress);
+            }
+        }).catch((e) => {
+            return null
+        })
+    }, []);
+    const handleSubmit = async (event) => {
         const form = event.target;
         event.preventDefault();
         var isFormValid = true;
@@ -34,11 +42,15 @@ function CheckoutShipping(props) {
         }
         if (isFormValid) {
             setValidated(false);
-            basketHelper.setShippingAddress(formData);
-            var email = emailRegex.test(props.emailrefinput.current.value);
-            if (email) {
-                basketHelper.copyShippingAddressToBilling();
-                navigate("/checkout-payment");
+            var basketResponse = await setBasketShippingAddress(formData);
+            if (basketResponse) {
+                var email = emailRegex.test(props.emailrefinput.current.value);
+                if (email) {
+                    var response = await copyShippingAddressToBilling(formData);
+                    if (response) {
+                        navigate("/checkout-payment");
+                    }
+                }
             }
         }
         

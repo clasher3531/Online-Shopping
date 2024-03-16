@@ -1,13 +1,11 @@
-import productData from '../Config/Products.json';
+import {fetchProductWithId} from '../services/productFetchService';
 
-function getProduct(id) {
-    for (let i=0; i < productData.length; i++) {
-        let product = productData[i];
-        if (product.id === id) {
-            return product;
-        }
+async function getProduct(id) {
+    var response  = await fetchProductWithId(id);
+    if (response.error) {
+        return null
     }
-    return null;
+    return response.product;
 }
 
 export default getProduct;

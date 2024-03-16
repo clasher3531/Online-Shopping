@@ -4,14 +4,22 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
-import basketHelper from "../../helpers/basketHelper";
+import {getBasket, setEmailAddress} from "../../helpers/basketHelper";
 const emailRegex = /[A-Za-z0-9._%+]+@[a-z0-9A-Z]+\.[a-z]{2,}$/;
 
 function CheckoutLogin(props) {
     const [isEmailValid, setEmailValid] = React.useState(false);
-    var basketEmailAddress = basketHelper.getBasket().email;
-    const [emailAddress, setEmail] = React.useState(basketEmailAddress);
-    const handleSubmit = (event) => {
+    const [emailAddress, setEmail] = React.useState(null);
+    React.useEffect(function() {
+        getBasket().then((currentBasket)=>{
+            if (currentBasket) {
+                setEmail(currentBasket.email);
+            }
+        }).catch((e) => {
+            return null
+        })
+    }, []);
+    const handleSubmit = async (event) => {
         const form = event.target;
         event.preventDefault();
         var isValidEmail = true;
@@ -24,7 +32,7 @@ function CheckoutLogin(props) {
         }
         if (isValidEmail) {
             setEmailValid(false);
-            basketHelper.setEmailAddress(form.email.value);
+            await setEmailAddress(form.email.value);
         }
     };
     const emailChangeHandler = (event) => {
