@@ -1,5 +1,5 @@
 import React from 'react';
-import basketHelper from '../../helpers/basketHelper';
+import {addProductToBasket} from '../../helpers/basketHelper';
 import getProduct from '../../helpers/productHelper';
 import Modal from '../../Utility/Modal';
 import ModalProductCard from '../Product/ModalProductCard';
@@ -7,11 +7,14 @@ import '../../css/Product.css';
 
 function ProductCard(props) {
     var [modalShow, setModalShow] = React.useState(false);
-    function addToCartButtonClickHandler() {
-        var product = getProduct(props.id);
-        var basket = basketHelper.getOrNewBasket();
-        basketHelper.addProductToBasket(basket, product);
-        setModalShow(true)
+    async function addToCartButtonClickHandler() {
+        var product = await getProduct(props.id);
+        if (product) {
+            var basket = await addProductToBasket(product);
+            if (basket) {
+                setModalShow(true);
+            }
+        }
     }
     return (
         <div className="product-card-main text-center">

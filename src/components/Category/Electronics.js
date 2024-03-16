@@ -2,16 +2,19 @@ import React from "react";
 import ProductListing from "../ProductListing";
 import HeaderUtility from "../Header/HeaderUtility";
 import Footer from "../Footer/Footer";
-import basketHelper from "../../helpers/basketHelper";
+import {getBasket} from "../../helpers/basketHelper";
 
 function AllProducts() {
     var [basket, setBasket] = React.useState({});
     function onLoadHandler() {
-        var currentBasket = basketHelper.getBasket();
-        if (currentBasket) {
-            setBasket(currentBasket);
-        }
-        window.scrollTo({top: 0, left: 0, behavior: 'smooth'})
+        getBasket().then((currentBasket)=>{
+            if (currentBasket) {
+                setBasket(currentBasket);
+                window.scrollTo({top: 0, left: 0, behavior: 'smooth'})
+            }
+        }).catch((e) => {
+            return null
+        })
     }
     return (
         <div className="electronics-main" onLoad={onLoadHandler}>

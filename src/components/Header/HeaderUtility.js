@@ -2,7 +2,7 @@ import React from "react";
 import NJLogo from './NJLogo';
 import Menu from './Menu';
 import MiniCart from "../Cart/MiniCart";
-import basketHelper from '../../helpers/basketHelper';
+import {getBasket} from '../../helpers/basketHelper';
 import CartIcon from "../Cart/CartIcon";
 import Login from "./Login";
 import { Row, Col } from "react-bootstrap";
@@ -11,10 +11,13 @@ import NavBarSmall from "./NavBarSmall";
 function HeaderUtility(props) {
     const [isSmallMenuShow, setSmallMenuShow] = React.useState(false);
     function productRemoveBasketHandler() {
-        var currentBasket = basketHelper.getBasket();
-        if (currentBasket) {
-            props.setBasketData(currentBasket);
-        }
+        getBasket().then((currentBasket)=>{
+            if (currentBasket) {
+                props.setBasketData(currentBasket);
+            }
+        }).catch((e) => {
+            return null
+        })
     }
 
     function smallMenuClickHandler() {

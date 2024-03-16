@@ -1,20 +1,31 @@
 import ProductCard from './Product/ProductCard';
 import React from 'react';
-import ProductData from '../Config/Products.json';
 import { Row, Col } from 'react-bootstrap';
 import '../css/ProductList.css'
-
-function getProductData(category) {
-    if (category !== 'All Products') {
-        return ProductData.filter(function(product) {
-            return product.category === category.toLowerCase();
-        });
-    }
-    return ProductData;
-}
+import {fetchAllProducts} from '../services/productFetchService';
 
 function ProductListing(props) {
-    var products = getProductData(props.category);
+    var [products, setProducts] = React.useState([]);
+    function getProductData(category) {
+        fetchAllProducts().then((productResponse) => {
+            if (productResponse.error && (!productResponse.error && productResponse.products.length === 0)) {
+                return setProducts([]);
+            }
+            if (category !== 'All Products') {
+                var prodToDisplay = productResponse.products.filter(function(product) {
+                    return product.category === category.toLowerCase();
+                });
+                setProducts(prodToDisplay);
+            } else {
+                setProducts(productResponse.products)
+            }
+        }).catch((e) => {
+            setProducts([]);
+        })
+    }
+    React.useEffect(function() {
+        getProductData(props.category);
+    }, [props.category])
     return (
         <div className='productListing'>
             <h2>{props.category}</h2>

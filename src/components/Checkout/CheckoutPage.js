@@ -3,7 +3,7 @@ import NJLogo from "../Header/NJLogo";
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import basketHelper from "../../helpers/basketHelper";
+import {getBasket, shippingMethodChangeNetPrice} from "../../helpers/basketHelper";
 import CheckoutLogin from "./CheckoutLogin";
 import CheckoutShipping from "./CheckoutShipping";
 import CheckoutShippingMethod from "./CheckoutShippingMethod";
@@ -17,18 +17,23 @@ function CheckoutPage() {
     var emailAddressButton = React.createRef();
     var emailAddressInput = React.createRef();
     React.useEffect(function() {
-        var currentBasket = basketHelper.getBasket();
-        if (currentBasket) {
-            setBasket(currentBasket);
-        }
-        window.scrollTo({top: 0, left: 0, behavior: 'smooth'})
+        getBasket().then((currentBasket)=>{
+            if (currentBasket) {
+                setBasket(currentBasket);
+                window.scrollTo({top: 0, left: 0, behavior: 'smooth'})
+            }
+        }).catch((e) => {
+            return null
+        })
     }, [basket.id, basket.totalPrice]);
     function shippingMethodChangeHandler(shipMethodData) {
-        basketHelper.shippingMethodChangeNetPrice(shipMethodData);
-        var currentData = basketHelper.getBasket();
-        if (currentData) {
-            setBasket(currentData);
-        }
+        shippingMethodChangeNetPrice(shipMethodData).then((currentBasket)=>{
+            if (currentBasket) {
+                setBasket(currentBasket);
+            }
+        }).catch((e) => {
+            return null;
+        })
     }
     return (
         <div className="checkout-page-main">

@@ -1,14 +1,17 @@
 import React from "react";
-import basketHelper from "../../helpers/basketHelper";
+import {getBasket} from "../../helpers/basketHelper";
 import { useNavigate } from 'react-router-dom';
 
 function CartIcon(props) {
     var navigate = useNavigate()
     function miniCartButtonHandler() {
-        var currentBasket = basketHelper.getBasket();
-        if (currentBasket) {
-            props.setBasketData(currentBasket);
-        }
+        getBasket().then((currentBasket)=>{
+            if (currentBasket) {
+                props.setBasketData(currentBasket);
+            }
+        }).catch((e) => {
+            return null
+        })
         if (props.iscartpage) {
             navigate('/cart')
         }

@@ -1,60 +1,40 @@
-function createOrder(basket) {
+import {createOrder, handleOrderPayment} from '../services/orderFetchService';
+import {removeBasketUUID} from './basketHelper';
+
+export async function createOrderFromBasket(basket) {
     try {
-        if (basket) {
-            var orderNumber = Math.floor(Math.random() * 99999).toString();
-            var order = convertBasketIntoOrder(basket);
-            if (order) {
-                order['orderNo'] = orderNumber;
-                setOrder(order);
-                return order;
-            }
+        if (!basket) {
             return null;
         }
+        var orderResponse = await createOrder(basket);
+        if (orderResponse.error) {
+            return null;
+        }
+        removeBasketUUID();
+        return orderResponse.order;
     } catch(e) {
         return null;
     }
 }
 
-function convertBasketIntoOrder(basket) {
-    if (basket) {
-        var order = {};
-        Object.keys(basket).forEach(function(key){
-            order[key] = basket[key];
-        });
-        sessionStorage.removeItem('Basket');
-        return order;
-    }
-    return null;
-}
+// function getOrder(orderNo) {
+//     if (orderNo) {
+//         var order = JSON.parse(localStorage.getItem(orderNo));
+//         return order;
+//     }
+// }
 
-function setOrder(order) {
-    if (order) {
-        localStorage.setItem(order.orderNo, JSON.stringify(order))
-    }
-}
-
-function getOrder(orderNo) {
-    if (orderNo) {
-        var order = JSON.parse(localStorage.getItem(orderNo));
-        return order;
-    }
-}
-
-function handlePayment(order) {
-    if (order) {
-        var transactionDetails = {
-            transactionID : Math.floor(Math.random() * 99999).toString()
+export async function handlePayment(order) {
+    try {
+        if (!order) {
+            return {success: false};
         }
-        order['paymentTransaction'] = transactionDetails;
-        setOrder(order);
-        return {success: true}
+        var orderResponse = await handleOrderPayment(order);
+        if (!orderResponse.success) {
+            return {success: false};
+        }
+        return {success: true};
+    } catch(e) {
+        return {success: false};
     }
-    return {success: false}
-}
-
-module.exports = {
-    createOrder: createOrder,
-    getOrder: getOrder,
-    setOrder: setOrder,
-    handlePayment: handlePayment
 }

@@ -2,7 +2,7 @@ import React from "react";
 import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
-import basketHelper from "../../helpers/basketHelper";
+import {getBasket} from "../../helpers/basketHelper";
 var Constants = require('../../Config/Constants.json');
 
 function CheckoutShippingMethod(props) {
@@ -11,7 +11,6 @@ function CheckoutShippingMethod(props) {
     function satRadioClickHandler() {
         var satData = {
             shippingMethod: Constants.SATMETHOD,
-            shippingPrice: Constants.satDeliveryPrice
         }
         props.shippingmethodchangehandler(satData);
     }
@@ -19,22 +18,24 @@ function CheckoutShippingMethod(props) {
     function stdRadioClickHandler() {
         var stdData = {
             shippingMethod: Constants.STDMETHOD,
-            shippingPrice: Constants.stdDeliveryPrice
         }
         props.shippingmethodchangehandler(stdData);
     }
     React.useEffect(function() {
-        var currentBasket = basketHelper.getBasket();
-        if (currentBasket) {
-            if (currentBasket.shippingMethod === Constants.STDMETHOD && stdDelivery.current) {
-                stdDelivery.current.checked = true;
-            } else if (currentBasket.shippingMethod === Constants.SATMETHOD && satDelivery.current) {
-                satDelivery.current.checked = true;
-            } else if (stdDelivery.current) {
-                stdDelivery.current.checked = true;
+        getBasket().then((currentBasket)=>{
+            if (currentBasket) {
+                if (currentBasket.shippingMethod === Constants.STDMETHOD && stdDelivery.current) {
+                    stdDelivery.current.checked = true;
+                } else if (currentBasket.shippingMethod === Constants.SATMETHOD && satDelivery.current) {
+                    satDelivery.current.checked = true;
+                } else if (stdDelivery.current) {
+                    stdDelivery.current.checked = true;
+                }
+                window.scrollTo({top: 0, left: 0, behavior: 'smooth'})
             }
-        }
-        window.scrollTo({top: 0, left: 0, behavior: 'smooth'})
+        }).catch((e) => {
+            return null
+        })
     }, [stdDelivery, satDelivery])
     return (
         <div className="checkout-shipping-method">

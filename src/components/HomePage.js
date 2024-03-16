@@ -1,7 +1,7 @@
 import React from "react";
 import HeroCarousel from './HeroMain';
 import HeaderUtility from '../components/Header/HeaderUtility';
-import basketHelper from '../helpers/basketHelper';
+import {getBasket} from '../helpers/basketHelper';
 import Footer from "./Footer/Footer";
 import Campaign from "./Header/Campaign";
 import WhyShoppingUs from "./HomePage/WhyShoppingUs";
@@ -13,10 +13,13 @@ import '../css/HomePage.css';
 function HomePage() {
     var [basketData, setBasketData] = React.useState({});
     function onLoadHandler() {
-      var currentBasket = basketHelper.getBasket();
-        if (currentBasket) {
-            setBasketData(currentBasket);
-        }
+        getBasket().then((currentBasket)=>{
+            if (currentBasket) {
+                setBasketData(currentBasket);
+            }
+        }).catch((e) => {
+            return null
+        })
     }
     return (
         <div className="homePage" onLoad={onLoadHandler}>

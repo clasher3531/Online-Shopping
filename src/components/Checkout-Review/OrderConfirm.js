@@ -1,5 +1,5 @@
 import React from "react";
-import basketHelper from "../../helpers/basketHelper";
+import {getBasket} from "../../helpers/basketHelper";
 import HeaderUtility from "../Header/HeaderUtility";
 import ConfirmationSummary from "./ConfirmationSummary";
 import {useLocation} from 'react-router-dom';
@@ -11,10 +11,13 @@ function OrderConfirm() {
     var location = useLocation();
     var orderNo = location.state;
     function onLoadHandler() {
-      var currentBasket = basketHelper.getBasket();
-        if (currentBasket) {
-            setBasketData(currentBasket);
-        }
+        getBasket().then((currentBasket)=>{
+            if (currentBasket) {
+                setBasketData(currentBasket);
+            }
+        }).catch((e) => {
+            return null
+        })
     }
     return (
         <div className="order-confirm" onLoad={onLoadHandler}>

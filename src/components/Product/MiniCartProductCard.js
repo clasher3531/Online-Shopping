@@ -1,12 +1,14 @@
 import React from "react";
-import basketHelper from "../../helpers/basketHelper";
+import {removeProductFromBasket} from "../../helpers/basketHelper";
 import { Container, Row, Col } from "react-bootstrap";
 import '../../css/MiniCartProductCard.css';
 
 function MiniCartProductCard(props) {
-    function removeBasketProductHandler() {
-        basketHelper.removeProductFromBasket(props.id);
-        props.productRemoveBasketHandler();
+    async function removeBasketProductHandler() {
+        var basket = await removeProductFromBasket(props.id);
+        if (basket) {
+            props.productRemoveBasketHandler();
+        }
     }
     return (
         <div className="minicart-product-card">
